@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Container Query</title>
+    <script defer src="https://cdn.bootcdn.net/ajax/libs/alpinejs/3.13.0/cdn.js"></script>
+    <style>
+        body {
+            margin: 60px;
+        }
+        .seekbar {
+            width: 360px;
+        }
+        .config {
+            margin-top: 80px;
+        }
+        /*  */
+        .container {
+            position: relative;
+            height: 100px;
+            /* border: 1px solid aquamarine; */
+            resize: horizontal;
+            line-height: 20px;
+            /* container-name: cc; */
+            /* container-type: size; */
+        }
+
+        .text {
+            position: relative;
+            visibility: hidden;
+        }
+
+        .bottom-right {
+            width: 60px;
+            direction: rtl;
+            position: absolute;
+            right: 0;
+            top: 20px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            visibility: visible;
+        }
+
+        .h {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            container-type: size;
+            container-name: h;
+        }
+        @container h (height <= 40px){
+            .bottom-right {
+                display: none;
+            }
+        }
+        
+        .two-lines {
+            position: absolute;
+            width: 100%;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            font-size: 46px;
+            overflow: hidden;
+        }
+        .text-view {
+            font-size: 16px;
+            vertical-align: top;
+        }
+    </style>
+</head>
+
+<body x-data="{width: 200, step1: false, step2: false, step3: false}">
+    <div class="container " x-bind:style="{
+        width: width + 'px'
+        }">
+        
+        <div x-show="step2" class="two-lines" :style="!step3 && {
+            overflow: 'visible',
+            transform: 'translateY(80px)',
+        }">
+            <span class="text-view">中文排版文字示例，用于填充设计和布局。这段文字没有实际意义，仅用于展示视觉效果。  </span>
+        </div>
+
+        <div x-show="step1" :style="!step3 && {         
+            background: 'rgba(99, 83, 225, .2)',
+            visibility: 'visible'
+    }" class="text" >
+            中文排版文字示例，用于填充设计和布局。这段文字没有实际意义，仅用于展示视觉效果。  
+            <div class="h">
+                <div class="bottom-right" :style="!step3 && {background: '#369', color:'#fff'}">仅用于展示视觉效果。</div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="config">
+        <input class="seekbar" x-model:value="width" type="range" min="200" max="700" step="20" >
+        <span>当前宽度 <span x-text="width"></span>px</span>
+
+        <div>
+            <input type="checkbox" x-model="step1"><label for="">step 1 容器查询使高度超过两行出现贴条</label> 
+        </div>
+
+        <div>
+            <input type="checkbox" x-model="step2"><label for="">step 2 超过两行出现超大省略号</label>
+        </div>
+        
+        <div>
+            <input type="checkbox" x-model="step3"><label for="">step 3 合并</label> 
+        </div>
+    </div>
+</body>
+
+</html>

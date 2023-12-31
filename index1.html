@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="https://cdn.bootcdn.net/ajax/libs/alpinejs/3.13.0/cdn.js"></script>
+    <title>ellipsis lab</title>
+    <style>
+        :root {
+            --w: 80px;
+        }
+
+        .container {
+            line-height: 20px;
+            position: relative;
+            
+        }
+
+        .outer-word {
+            position: absolute;
+            font-size: 80px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            float: right;
+            width: 100%;
+            /* color: rgba(76, 222, 222, .5); */
+            /* visibility: hidden; */
+            /* transform: perspective(1500px) translateX(-125px) rotateY(45deg) scale(0.9); */
+
+        }
+
+        .word {
+            font-size: 16px;
+            display: inline;
+            vertical-align: top;
+        }
+
+        .height-helper {
+            float: right;
+            width: 100%;
+            color: rgba(135, 24, 222, .5);
+            margin-left: calc(-1 * var(--w));
+            visibility: hidden;
+        }
+
+        .green-box {
+            background: rgba(0, 255, 0, .1);
+            height: 40px;
+            width: var(--w);
+            float: right;
+            visibility: hidden;
+        }
+
+        .blue-box {
+            /* background: rgba(0, 0, 255, .5); */
+            height: 20px;
+            width: var(--w);
+            float: right;
+            position: relative;
+            left: 100%;
+            transform: translateX(-100%) translateY(-100%);
+
+            overflow: hidden;
+            direction: rtl;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .identifier {
+            margin-left: 10px;
+            position: relative;
+            display: none;
+        }
+        .identifier::after {
+            content: '｜';
+            position: relative;
+            width: 1px;
+            height: 100%;
+            color: red;
+        }
+        .identifier::before {
+            width: 6px;
+            height: 6px;
+            border-radius: 99px;
+            top: 50%;
+            transform: translateY(-50%);
+            left: -8px;
+            position: absolute;
+            background-color: red;
+            content: '';
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app" x-data="{ width: 300, step: 50,
+    word: '中文排版文字示例，用于填充设计和布局。这段文字没有实际意义，仅用于展示视觉效果。',
+    addText(){
+        this.word = this.word.slice(0, this.word.length - ', 你好#8 cool.pptx'.length)
+    }}
+    ">
+        <button x-on:click="width -= step">decrease</button>
+        width: <span x-text="width"></span>
+        <button x-on:click="width += step">increase</button>
+        <br>
+
+        <button x-on:click="addText">less text</button>
+        <button x-on:click="word += ', 你好#8 cool.pptx'">more text</button>
+
+        <br>
+        <br>
+
+        <div class="container" x-bind:style="{
+                width: width + 'px',
+                border: '1px solid #000',
+                minHeight: '400px'
+        }">
+            <div class="height-helper" >
+                <span class="identifier">转码失败</span>
+                <span x-text="word"></span>
+            </div>
+            <div class="outer-word">
+                <div class="word" >
+                    <span class="identifier">转码失败</span>
+                <span x-text="word"></span>
+                </div>
+            </div>
+            <div class="green-box"></div>
+            <div class="blue-box" x-text="word"></div>
+        </div>
+    </div>
+    <script>
+
+
+    </script>
+</body>
+
+</html>

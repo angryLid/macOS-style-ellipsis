@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clamp()</title>
+    <script defer src="https://cdn.bootcdn.net/ajax/libs/alpinejs/3.13.0/cdn.js"></script>
+    <style>
+        .container {
+
+            height: 100px;
+            overflow: hidden;
+            border: 1px solid aquamarine;
+            position: relative;
+            /* container-name: cc; */
+            /* container-type: size; */
+        }
+
+        .text {
+            /* height: 100%; */
+            /* width: 100%; */
+            background: rgba(99, 83, 225, .2);
+            position: relative;
+            line-height: 20px;
+            visibility: hidden;
+            /* container-name: text; */
+            /* container-type: size; */
+
+        }
+
+        @container cc (width >= 400px) {
+            .text {
+                font-weight: 700;
+            }
+        }
+
+        .bottom-right {
+            width: 80px;
+            direction: rtl;
+            /* background: rgba(255, 255, 255, 1); */
+            position: absolute;
+            right: 0;
+            top: clamp(-9999px, calc(calc(100% - 41px) * 10000),20px);
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            visibility: initial;
+        }
+
+        .two-line {
+            width: 100%;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            font-size: 80px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            line-height: 20px;
+            .two-line-content {
+                font-size: initial;
+                display: inline;
+                vertical-align: top;
+            }
+        }
+        .foo {
+            background: rgba(32,45,111,.2);
+            /* container-type: size; */
+        }
+        .h {
+            height: 100%;
+            width: 100%;
+            background: rgba(99, 83, 133, .2);
+            position: absolute;
+            top: 0;
+            left: 0;
+            container-type: size;
+            container-name: h;
+        }
+        @container h (height <= 40px){
+            .bottom-right {
+                background-color: black;
+            }
+        }
+    </style>
+</head>
+<!-- if parent.height >= 40px; then
+        top = 20px;
+    else
+        top = 99999999px
+    endif -->
+<body x-data="{width: 300}">
+    <div class="container " x-bind:style="{
+        width: width + 'px'
+        }">
+        <div class="text">
+            中文排版文字示例，用于填充设计和布局。这段文字没有实际意义，仅用于展示视觉效果。
+                <div class="bottom-right">仅用于展示视觉效果。</div>
+            
+        </div>
+        <div class="two-line">
+                <div class="two-line-content">
+                    中文排版文字示例，用于填充设计和布局。这段文字没有实际意义，仅用于展示视觉效果。
+                </div>
+            </div>
+    </div>
+    <hr>
+    <button x-on:click="width += 50">width +</button>
+    <button x-on:click="width -= 50">width -</button>
+
+    <hr>
+    width: <span x-text="width"></span>
+    <div class="foo">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum impedit assumenda consectetur odit ea doloremque, est dolorum debitis praesentium. Laudantium inventore illum a aut vitae ratione illo, dolore perferendis quas.
+    </div>
+</body>
+
+</html>
