@@ -13,3 +13,9 @@
 2. 使用-webkit-box使文字显示2行，且调大省略号的字体大小，使右下角空出一块；
 
 3. 合并上面两个元素，并隐藏溢出部分。
+
+## 参考
+
+[纯css实现文本中间省略 - 知乎](https://zhuanlan.zhihu.com/p/504267989)
+
+[CSS 也能实现 if 判断？实现动态高度下的不同样式展现 · Issue #248 · chokcoco/iCSS](https://github.com/chokcoco/iCSS/issues/248)
